@@ -1,0 +1,16 @@
+services:
+  restaurantDb:
+    restart: always  #para que cuando haya un error se vuelva a levantar solo
+    image: postgres
+    container_name: restaurant-database
+
+    ports:
+      - 5432:5432 #izq_puertoLocal:der_puertoMquinaVirtual
+    
+    environment:
+      POSTGRES_DB: restaurant
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+
+    volumes:
+      - ./postgres:/var/lib/postgresql/data #toda la base de datos se refleja en la carpeta postgres para recuperar
