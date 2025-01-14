@@ -1,7 +1,10 @@
-import { ProductTable } from "@/modules/products";
+import { getAllProducts, ProductTable } from "@/modules/products";
 import { HeaderPage } from "@/modules/shared";
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+
+  const products = await getAllProducts();
+
   return (
     <>
       <HeaderPage
@@ -12,7 +15,9 @@ export default function ProductsPage() {
       />
 
       {/* PRODUCT TABLE */}
-      <ProductTable/>
+      <ProductTable
+        products={products}
+      />
     </>
   );
 }

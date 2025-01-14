@@ -1,37 +1,52 @@
 "use client"
 import { Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
 import React from 'react'
+import { DeleteProductModal, IProduct } from '@/modules/products';
+import Image from 'next/image';
 
-export const ProductTable = () => {
-  return (
-    <section className='container pt-8'>
-        <Table aria-label='Products management table'>
-            <TableHeader>
-                <TableColumn>IMAGEN</TableColumn>
-                <TableColumn>NOMBRE</TableColumn>
-                <TableColumn>CATEGORIA</TableColumn>
-                <TableColumn>STOCK</TableColumn>
-                <TableColumn>PRECIO</TableColumn>
-                <TableColumn>FECHA DE CREACION</TableColumn>
-                <TableColumn>ACCIONES</TableColumn>
-            </TableHeader>
+interface Props {
+    products: IProduct[];
+}
 
-            <TableBody>
-                {
-                    [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14].map(product => (
-                        <TableRow key={product}>
-                            <TableCell>Imagen</TableCell>
-                            <TableCell>Nombe</TableCell>
-                            <TableCell>Categoria</TableCell>
-                            <TableCell>Stock</TableCell>
-                            <TableCell>Precio</TableCell>
-                            <TableCell>Fecha</TableCell>
-                            <TableCell>Acciones</TableCell>
-                        </TableRow>
-                    ))
-                }
-            </TableBody>
-        </Table>
-    </section>
-  )
+export const ProductTable = ({ products }: Props) => {
+    return (
+        <section className='container pt-8'>
+            <Table aria-label='Products management table'>
+                <TableHeader>
+                    <TableColumn>IMAGEN</TableColumn>
+                    <TableColumn>NOMBRE</TableColumn>
+                    <TableColumn>CATEGORIA</TableColumn>
+                    <TableColumn>STOCK</TableColumn>
+                    <TableColumn>PRECIO</TableColumn>
+                    <TableColumn>FECHA DE CREACION</TableColumn>
+                    <TableColumn>ACCIONES</TableColumn>
+                </TableHeader>
+
+                <TableBody>
+                    {
+                        products.map(product => (
+                            <TableRow key={product.id}>
+                                <TableCell>
+                                    <Image
+                                        alt={product.name}
+                                        src={product.image}
+                                        width={70}
+                                        height={70}
+                                    />
+                                </TableCell>
+                                <TableCell>{product.name}</TableCell>
+                                <TableCell>{product.category?.name}</TableCell>
+                                <TableCell>{product.stock} u.</TableCell>
+                                <TableCell>{product.price} $</TableCell>
+                                <TableCell>{product.createdAt.toLocaleDateString()}</TableCell>
+                                <TableCell>
+                                    <DeleteProductModal productId={product.id} />
+                                </TableCell>
+                            </TableRow>
+                        ))
+                    }
+                </TableBody>
+            </Table>
+        </section>
+    )
 }
