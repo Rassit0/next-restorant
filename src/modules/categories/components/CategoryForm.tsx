@@ -2,8 +2,12 @@
 import { Button, Input } from '@nextui-org/react'
 import React, { FormEvent, useState } from 'react'
 import { toast } from 'sonner'
+import { createCategory } from '../actions/create-category'
+import { useRouter } from 'next/navigation'
 
 export const CategoryForm = () => {
+
+    const router = useRouter();
 
     const [isLoading, setIsLoading] = useState(false)
 
@@ -21,9 +25,31 @@ export const CategoryForm = () => {
             return;
         }
 
+        const formData = new FormData();
+
+        formData.append("name", categoryName.value);
+        formData.append("image", image.files[0]);
+
+        console.log(formData)
+
         // EJECUTAR SERVER ACTIONS
-        
+        const { error, message } = await createCategory(formData);
+
+        if (error) {
+            toast.warning("Ocurrió un error", {
+                description: message
+            })
+
+            setIsLoading(false);
+            return;
+        }
+
+        // Si se guarda con exito
+        toast.success(message);
         setIsLoading(false);
+
+        router.push('/admin/categories');
+        return;
     }
 
     return (

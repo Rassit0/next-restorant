@@ -1,7 +1,11 @@
-import { CategoryTable } from "@/modules/categories";
+import { CategoryTable, getCategories } from "@/modules/categories";
 import { HeaderPage } from "@/modules/shared";
 
-export default function CategoriesPage() {
+export default async function CategoriesPage() {
+
+  // OBTENER CATEGORIAS
+  const categories = await getCategories();
+  
   return (
     <>
       {/* HEADER */}
@@ -14,7 +18,9 @@ export default function CategoriesPage() {
 
 
       {/* TABLA DE CATEGORIAS */}
-      <CategoryTable />
+      <CategoryTable
+        categories = { categories }
+      />
     </>
   );
 }
