@@ -40,7 +40,7 @@ export const SideMenu = () => {
                 variant='light'
                 className='mt-auto'
             >
-                Cerrar Sesión'
+                Cerrar Sesión
             </Button>
         </nav>
     )

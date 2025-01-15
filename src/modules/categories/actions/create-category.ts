@@ -4,7 +4,6 @@ import { slugify } from "@/helpers/slugify";
 import { prisma } from "@/lib/prisma";
 import { v2 as claudinary } from "cloudinary";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 interface ICreateCategory {
     name: string;
