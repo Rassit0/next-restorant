@@ -1,3 +1,4 @@
+import { useCartStore } from '@/modules/cart'
 import { Button, Card } from '@nextui-org/react'
 import { Product } from '@prisma/client'
 import { ShoppingCart01Icon } from 'hugeicons-react'
@@ -9,11 +10,14 @@ interface Props {
 }
 
 export const ProductCard = ({ product }: Props) => {
+
+    const { addProductToCart } = useCartStore();
+
     return (
         <Card
             // isPressable
             shadow='md'
-            className='md:max-w-[275px] border-none rounded-xl h-full'
+            className='md:max-w-[675px] border-none rounded-xl h-full'
             fullWidth
         >
             <div className='text-center grid md:grid-cols-2 gap-4 p-4 h-full'>
@@ -44,8 +48,9 @@ export const ProductCard = ({ product }: Props) => {
 
                     {/* BUTTON */}
                     <Button
+                        onPress={() => addProductToCart(product)}
                         color='primary'
-                        startContent={<ShoppingCart01Icon/>}
+                        startContent={<ShoppingCart01Icon />}
                     />
                 </div>
             </div>

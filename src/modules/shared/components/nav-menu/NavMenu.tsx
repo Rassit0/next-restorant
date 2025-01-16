@@ -1,7 +1,6 @@
-"use client"
-import React from 'react'
 import { NavMenuButton } from './NavMenuButton'
 import { NavMenuSearchInput } from './NavMenuSearchInput'
+import { NavCartButton } from './NavCartButton'
 
 export const NavMenu = () => {
   return (
@@ -10,6 +9,8 @@ export const NavMenu = () => {
             <NavMenuButton/>
 
             <NavMenuSearchInput/>
+
+            <NavCartButton/>
 
         </div>
     </nav>

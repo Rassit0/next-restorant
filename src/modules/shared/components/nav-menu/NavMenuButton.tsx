@@ -1,3 +1,4 @@
+"use client"
 import { Button } from '@nextui-org/react'
 import { Menu01Icon } from 'hugeicons-react'
 import React from 'react'
