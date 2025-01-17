@@ -5,6 +5,7 @@ import { SideMenuList } from './SideMenuList'
 import { useUIStore } from '../../stores/ui.store'
 import { Button } from '@nextui-org/react'
 import { Cancel01Icon } from 'hugeicons-react'
+import { closeSession } from '@/modules/auth'
 
 export const SideMenu = () => {
 
@@ -36,6 +37,7 @@ export const SideMenu = () => {
             {/* CLOSE SESION */}
             <Button
                 fullWidth
+                onPress={async () => { await closeSession() }}
                 color='danger'
                 variant='light'
                 className='mt-auto'

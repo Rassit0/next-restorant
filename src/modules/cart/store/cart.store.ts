@@ -2,6 +2,7 @@ import { create, StateCreator } from "zustand";
 import { ICart } from "../interfaces/cart";
 import { Product } from "@prisma/client";
 import { toast } from "sonner";
+import { persist } from "zustand/middleware";
 
 // Las variables q van a ser modificadas
 interface CartState {
@@ -114,5 +115,10 @@ const storeApi: StateCreator<CartState & Actions> = (set, get) => ({
 
 // Exporta la lógica
 export const useCartStore = create<CartState & Actions>()(
-    storeApi
+    //Hacer persistente el store para que no se pierda los datos al actualizar la pagina
+    persist(
+        storeApi,
+        { name: "cart-menu-storage" } // Va guardar la info en el storage con este nombre
+    )
+    // storeApi
 );
