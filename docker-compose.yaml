@@ -5,7 +5,7 @@ services:
     container_name: restaurant-database
 
     ports:
-      - 5432:5432 #izq_puertoLocal:der_puertoMquinaVirtual
+      - 5439:5432 #izq_puertoLocal:der_puertoMquinaVirtual
     
     environment:
       POSTGRES_DB: restaurant

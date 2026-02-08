@@ -32,6 +32,7 @@ export default async function ProductDetailsPage({
 export async function generateStaticParams() {
     const products = await getAllProducts();
 
+    // Devuelve los slugs creados actualizados para construir las paginas que dependen de slug
     return products.map(product => ({
         slug: product.slug
     }))
