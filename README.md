@@ -28,3 +28,8 @@ $   npx prisma db push
 ```bash
 $   npm run dev
 ```
+
+6. Ejecutar el seed para crear usuarios de prueba
+```bash
+$   curl http://localhost:3000/api/seed
+```

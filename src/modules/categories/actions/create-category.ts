@@ -12,9 +12,19 @@ interface ICreateCategory {
 }
 
 export const createCategory = async (formData: FormData) => {
+    const name = formData.get('name') as string;
+    const image = formData.get('image') as File;
+    
+    if (!name || !image) {
+        return {
+            error: true,
+            message: "Nombre e imagen son requeridos"
+        };
+    }
+
     const category = {
-        name: formData.get('name'),
-        image: formData.get('image'),
+        name,
+        image,
         slug: ''
     } as ICreateCategory
 

@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 
 
 
-export async function GET(request: Request){
+export async function GET(){
 
     // Primero borra todos los usuarios de la base de datos
     await prisma.user.deleteMany();
