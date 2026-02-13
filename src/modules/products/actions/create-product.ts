@@ -56,8 +56,10 @@ const uploadImage = async (image: File) => {
     try {
         const buffer = await image.arrayBuffer();
         const base64Image = Buffer.from(buffer).toString('base64');
+        const mimeType = image.type || 'image/jpeg';
+        
 
-        return claudinary.uploader.upload(`data:image/png;base64,${base64Image}`)
+        return claudinary.uploader.upload(`data:${mimeType};base64,${base64Image}`)
             .then(response => response.secure_url);
     } catch (error) {
         throw error

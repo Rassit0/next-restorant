@@ -51,7 +51,7 @@ export const OrderCard = ({ order }: Props) => {
                         <li key={detail.productName} className='grid text-start grid-cols-3 items-center gap-2'>
                             <p>{detail.productName}</p>
                             <p className='text-center'>{detail.quantity}u.</p>
-                            <p className='text-center'>{detail.subTotal}$</p>
+                            <p className='text-center'>{detail.subTotal} Bs.</p>
                         </li>
                     ))
                 }
@@ -61,7 +61,7 @@ export const OrderCard = ({ order }: Props) => {
 
             <div className='w-full font-semibold text-xl flex justify-between'>
                 <p>Total:</p>
-                <p>${order.total}</p>
+                <p>Bs. {order.total}</p>
             </div>
 
             {

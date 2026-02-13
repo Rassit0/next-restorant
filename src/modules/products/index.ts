@@ -7,6 +7,7 @@ export { deleteProduct } from "./actions/delete-product";
 export { getProductBySlug } from "./actions/get-product-by-slug";
 export { ProductDetails } from "./components/ProductDetails";
 export { ProductList } from "./components/product-list/ProductList";
+export * from './actions/update-product';
 
 //INTERFACES
 export type { IProduct, IProductCategory } from './interfaces/products';
@@ -16,4 +17,5 @@ export type { IProductDetails } from './interfaces/product-details';
 export { ProductForm } from "./components/ProductForm";
 export { ProductTable } from "./components/product-table/ProductTable";
 export { DeleteProductModal } from "./components/product-table/DeleteProductModal";
+export * from './components/UpdateProductModal'
 

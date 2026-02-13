@@ -1,16 +1,18 @@
 "use client"
 import { Button, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react'
 import React from 'react'
-import { DeleteProductModal, IProduct } from '@/modules/products';
+import { DeleteProductModal, IProduct, UpdateProductModal } from '@/modules/products';
 import Image from 'next/image';
 import { ViewIcon } from 'hugeicons-react';
 import { useRouter } from 'next/navigation';
+import { Category } from '@prisma/client';
 
 interface Props {
     products: IProduct[];
+    categories: Category[];
 }
 
-export const ProductTable = ({ products }: Props) => {
+export const ProductTable = ({ products , categories}: Props) => {
 
     const router = useRouter();
 
@@ -45,7 +47,8 @@ export const ProductTable = ({ products }: Props) => {
                                 <TableCell>{product.price} $</TableCell>
                                 <TableCell>{product.createdAt.toLocaleDateString()}</TableCell>
                                 <TableCell>
-                                    <Button onPress={() => { router.push(`/admin/products/${product.slug}`) }} color='primary' variant='light' isIconOnly startContent={<ViewIcon />} />
+                                    <Button onPress={() => { router.push(`/admin/products/${product.slug}`) }} color='success' variant='light' isIconOnly startContent={<ViewIcon />} />
+                                    <UpdateProductModal product={product} categories={categories}/>
                                     <DeleteProductModal productId={product.id} />
                                 </TableCell>
                             </TableRow>

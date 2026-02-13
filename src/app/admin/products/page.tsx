@@ -1,9 +1,12 @@
+import { getCategories } from "@/modules/categories";
 import { getAllProducts, ProductTable } from "@/modules/products";
 import { HeaderPage } from "@/modules/shared";
 
 export default async function ProductsPage() {
-
-  const products = await getAllProducts();
+  const [products, categories] = await Promise.all([
+    getAllProducts(),
+    getCategories(),
+  ]);
 
   return (
     <>
@@ -15,9 +18,7 @@ export default async function ProductsPage() {
       />
 
       {/* PRODUCT TABLE */}
-      <ProductTable
-        products={products}
-      />
+      <ProductTable products={products} categories={categories} />
     </>
   );
 }

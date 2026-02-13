@@ -14,7 +14,7 @@ export const getAllProducts = async () => {
             }
         });
 
-        console.log(JSON.stringify(products))
+        // console.log(JSON.stringify(products))
         return products;
     } catch (error) {
         console.log(error);
