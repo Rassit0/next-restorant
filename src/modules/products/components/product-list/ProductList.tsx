@@ -2,7 +2,7 @@
 import { CircularProgress } from "@nextui-org/react";
 import { Product } from "@prisma/client";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getProductsByCategory } from "@/modules/products";
 import { ProductCard } from "./ProductCard";
 
@@ -13,16 +13,16 @@ export const ProductList = () => {
 
     const categorySlug = useSearchParams().get('category');
 
-    const updateProductList = async () => {
+    const updateProductList = useCallback(async () => {
         setIsLoading(true);
         const productsResponse = await getProductsByCategory(categorySlug);
         setProducts(productsResponse);
         setIsLoading(false);
-    }
+    }, [categorySlug]);
 
     useEffect(() => {
         updateProductList();
-    }, [categorySlug])
+    }, [updateProductList])
     
 
     if(isLoading){

@@ -1,22 +1,16 @@
 "use client";
 import {
   CircularProgress,
-  DatePicker,
   DateRangePicker,
   DateValue,
   RangeValue,
 } from "@nextui-org/react";
-import { subDays, format } from "date-fns";
-import React, { useEffect, useState } from "react";
+import { format } from "date-fns";
+import React, { useEffect } from "react";
 import useSWR, { mutate } from "swr";
 import { IOrderWithDetails } from "../interfaces/orders-with-details";
 import { OrderCard } from "./OrderCard";
-import { now, getLocalTimeZone, parseDate } from "@internationalized/date";
-
-interface DateRange {
-  startDate: Date | null;
-  endDate: Date | null;
-}
+import { getLocalTimeZone, parseDate } from "@internationalized/date";
 
 export const OrderList = () => {
   const today = parseDate(new Date().toISOString().split("T")[0]);
