@@ -50,6 +50,7 @@ export const LoginForm = () => {
                 name='email'
                 label="Correo Electronico"
                 variant='underlined'
+                defaultValue='admin@rasstech.com'
             />
 
             <Input
@@ -57,6 +58,7 @@ export const LoginForm = () => {
                 name='password'
                 label="Contraseña"
                 variant='underlined'
+                defaultValue='Admin123'
             />
 
             <Button

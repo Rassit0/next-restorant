@@ -39,7 +39,7 @@ export const OrderList = () => {
   };
 
   const url = buildUrl();
-  console.log({ url });
+  // console.log({ url });
 
   const fetcher = (url: string) =>
     fetch(url).then((res) => {
@@ -56,7 +56,7 @@ export const OrderList = () => {
   // Update URL when dates change
   useEffect(() => {
     mutate(url);
-  }, [dateRange]);
+  }, [dateRange, url]);
 
   if (isLoading) {
     return (
