@@ -87,8 +87,17 @@ export const OrderList = () => {
     updatedAt: new Date(order.updatedAt),
   }));
 
+  // Calcular el total de ventas solo de órdenes completadas
+  const totalSales = orders
+    .filter(order => order.status)
+    .reduce((sum, order) => sum + order.total, 0);
+
+  // Calcular la cantidad de órdenes completadas y pendientes
+  const completedOrders = orders.filter(order => order.status).length;
+  const pendingOrders = orders.filter(order => !order.status).length;
+
   return (
-    <section className="container mx-auto px-4 py-8 max-w-7xl">
+    <section className="container mx-auto px-4 md:px-20 py-8 max-w-full">
       {/* Filtros */}
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-8 border border-gray-100 dark:border-gray-700">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
@@ -156,11 +165,41 @@ export const OrderList = () => {
       </div>
 
       {/* Encabezado y contador */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between mb-6">
-        <div>
+      <div className="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+        <div className="px-2">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white">
             Historial de Órdenes
           </h1>
+          <p className="text-gray-500 dark:text-gray-400">
+            Gestiona y revisa todas las órdenes realizadas
+          </p>
+        </div>
+
+        {/* Resumen de ventas */}
+        <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
+          <div className="flex flex-col md:flex-row gap-4 text-center md:text-left">
+            <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Total Ventas</p>
+              <p className="text-xl font-bold text-blue-600 dark:text-blue-400">
+                Bs. {totalSales.toFixed(2)}
+              </p>
+            </div>
+            <div className="p-3 bg-green-50 dark:bg-green-900/30 rounded-lg">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Completadas</p>
+              <p className="text-xl font-bold text-green-600 dark:text-green-400">
+                {completedOrders}
+              </p>
+            </div>
+            <div className="p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg">
+              <p className="text-sm text-gray-500 dark:text-gray-400">Pendientes</p>
+              <p className="text-xl font-bold text-yellow-600 dark:text-yellow-400">
+                {pendingOrders}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="px-2">
           <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
             {orders?.length || "No"}{" "}
             {orders?.length === 1 ? "orden encontrada" : "órdenes encontradas"}
@@ -170,14 +209,14 @@ export const OrderList = () => {
 
       {/* Lista de órdenes */}
       {orders && orders.length > 0 ? (
-        <ul className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <ul className="grid lg:grid-cols-2 xl:grid-cols-3 gap-4">
           {orders.map((order) => (
-            <li
-              key={order.id}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden"
-            >
-              <OrderCard order={order} />
-            </li>
+            // <li
+            //   key={order.id}
+            //   className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden"
+            // >
+            // </li>
+              <OrderCard key={order.id} order={order} />
           ))}
         </ul>
       ) : (

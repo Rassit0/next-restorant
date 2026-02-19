@@ -22,7 +22,7 @@ export const OrderCard = ({ order }: Props) => {
         <Card
             // isPressable
             shadow='md'
-            className='border-none rounded-xl p-6'
+            className='border-none rounded-xl p-6 hover:shadow-2xl'
             fullWidth
         >
             <div className='text-start flex justify-between items-start'>

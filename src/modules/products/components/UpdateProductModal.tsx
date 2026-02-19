@@ -103,6 +103,7 @@ export const UpdateProductModal = ({ categories, product }: Props) => {
                   type="number"
                   name="price"
                   defaultValue={product.price.toString()}
+                  endContent='Bs.'
                 />
 
                 <Input

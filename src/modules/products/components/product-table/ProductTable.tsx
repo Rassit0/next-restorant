@@ -44,7 +44,7 @@ export const ProductTable = ({ products , categories}: Props) => {
                                 <TableCell>{product.name}</TableCell>
                                 <TableCell>{product.category?.name}</TableCell>
                                 <TableCell>{product.stock} u.</TableCell>
-                                <TableCell>{product.price} $</TableCell>
+                                <TableCell>{product.price} Bs.</TableCell>
                                 <TableCell>{product.createdAt.toLocaleDateString()}</TableCell>
                                 <TableCell>
                                     <Button onPress={() => { router.push(`/admin/products/${product.slug}`) }} color='success' variant='light' isIconOnly startContent={<ViewIcon />} />

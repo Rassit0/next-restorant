@@ -72,6 +72,7 @@ export const ProductForm = ({ categories }: Props) => {
                         placeholder='Agrega un precio'
                         type='number'
                         name='price'
+                        endContent='Bs.'
                     />
 
                     <Input
