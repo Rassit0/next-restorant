@@ -26,6 +26,12 @@ export const SideCart = () => {
     const scheduledAtRaw = (form.scheduledAt as HTMLInputElement | undefined)
       ?.value;
 
+    if (!client.trim()) {
+      toast.warning("Debes ingresar el nombre del cliente");
+      setIsLoading(false);
+      return;
+    }
+
     // Validación: obligatorio
     if (!scheduledAtRaw) {
       toast.warning("Debes seleccionar la fecha y hora de entrega");
