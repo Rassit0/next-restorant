@@ -1,7 +1,7 @@
 "use client";
 import { Button, Input } from "@nextui-org/react";
 import { Cancel01Icon } from "hugeicons-react";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { useCartStore } from "@/modules/cart";
 import { CartList } from "@/modules/cart";
 import { toast } from "sonner";
@@ -11,18 +11,30 @@ export const SideCart = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { isCartOpen, handleCartOpen, total, cart, cleanCart } = useCartStore();
 
+  const [client, setClient] = useState("");
+  const [scheduledAt, setScheduledAt] = useState(() => {
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+  });
+
   const generateNewOrder = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     if (cart.length === 0) {
       toast.warning("No hay elementos en el carrito");
+      setIsLoading(false);
       return;
     }
 
     // const { client } = e.target as HTMLFormElement;
     const form = e.target as HTMLFormElement;
-    const client = (form.client as HTMLInputElement).value;
+    // const client = (form.client as HTMLInputElement).value;
     const scheduledAtRaw = (form.scheduledAt as HTMLInputElement | undefined)
       ?.value;
 
@@ -56,10 +68,28 @@ export const SideCart = () => {
     }
 
     toast.success(message);
+    resetForm();
     cleanCart();
 
     setIsLoading(false);
   };
+
+  const resetForm = () => {
+    setClient("");
+    setScheduledAt(() => {
+      const d = new Date();
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      const hours = String(d.getHours()).padStart(2, "0");
+      const minutes = String(d.getMinutes()).padStart(2, "0");
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
+    });
+  };
+
+  useEffect(() => {
+    resetForm();
+  }, [isCartOpen]);
 
   return (
     <form
@@ -82,6 +112,8 @@ export const SideCart = () => {
         placeholder="Nombre del cliente"
         name="client"
         className="my-4"
+        value={client}
+        onValueChange={(v) => setClient(v)}
       />
       <Input
         isRequired
@@ -90,16 +122,8 @@ export const SideCart = () => {
         placeholder="Fecha y hora de entrega"
         name="scheduledAt"
         className="my-2"
-        defaultValue={(() => {
-          const d = new Date();
-          d.setHours(12, 0, 0, 0);
-          const year = d.getFullYear();
-          const month = String(d.getMonth() + 1).padStart(2, "0");
-          const day = String(d.getDate()).padStart(2, "0");
-          const hours = String(d.getHours()).padStart(2, "0");
-          const minutes = String(d.getMinutes()).padStart(2, "0");
-          return `${year}-${month}-${day}T${hours}:${minutes}`;
-        })()}
+        value={scheduledAt}
+        onChange={(e) => setScheduledAt(e.target.value)}
       />
 
       {/* LISTADO DE CARRITO */}

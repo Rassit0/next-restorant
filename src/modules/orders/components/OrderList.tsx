@@ -10,16 +10,16 @@ import React, { useEffect, useState } from "react";
 import useSWR, { mutate } from "swr";
 import { IOrderWithDetails } from "../interfaces/orders-with-details";
 import { OrderCard } from "./OrderCard";
-import { getLocalTimeZone } from "@internationalized/date";
+import { getLocalTimeZone, parseDate } from "@internationalized/date";
 
 export const OrderList = () => {
-  // const today = parseDate(new Date().toISOString().split("T")[0]);
+  const today = parseDate(new Date().toISOString().split("T")[0]);
   const [dateRange, setDateRange] =
-    // useState<RangeValue<DateValue> | null>({
-    //   start: today,
-    //   end: today,
-    // });
-    useState<RangeValue<DateValue> | null>(null);
+    useState<RangeValue<DateValue> | null>({
+      start: today,
+      end: today,
+    });
+    // useState<RangeValue<DateValue> | null>(null);
 
   // Build URL with query parameters
   const buildUrl = () => {
