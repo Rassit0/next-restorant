@@ -6,19 +6,20 @@ import {
   RangeValue,
 } from "@nextui-org/react";
 import { format } from "date-fns";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useSWR, { mutate } from "swr";
 import { IOrderWithDetails } from "../interfaces/orders-with-details";
 import { OrderCard } from "./OrderCard";
-import { getLocalTimeZone, parseDate } from "@internationalized/date";
+import { getLocalTimeZone } from "@internationalized/date";
 
 export const OrderList = () => {
-  const today = parseDate(new Date().toISOString().split("T")[0]);
+  // const today = parseDate(new Date().toISOString().split("T")[0]);
   const [dateRange, setDateRange] =
-    React.useState<RangeValue<DateValue> | null>({
-      start: today,
-      end: today,
-    });
+    // useState<RangeValue<DateValue> | null>({
+    //   start: today,
+    //   end: today,
+    // });
+    useState<RangeValue<DateValue> | null>(null);
 
   // Build URL with query parameters
   const buildUrl = () => {
@@ -82,19 +83,26 @@ export const OrderList = () => {
   // COnvertir las fechas a objeros Date
   const orders = data!.map((order: IOrderWithDetails) => ({
     ...order,
-    status: Boolean(order.status),
+    scheduledAt: new Date(order.scheduledAt),
     createdAt: new Date(order.createdAt),
     updatedAt: new Date(order.updatedAt),
   }));
 
   // Calcular el total de ventas solo de órdenes completadas
   const totalSales = orders
-    .filter(order => order.status)
+    .filter((order) => order.status==='COMPLETED')
     .reduce((sum, order) => sum + order.total, 0);
 
   // Calcular la cantidad de órdenes completadas y pendientes
-  const completedOrders = orders.filter(order => order.status).length;
-  const pendingOrders = orders.filter(order => !order.status).length;
+  const completedOrders = orders.filter(
+    (order) => order.status === "COMPLETED",
+  ).length;
+  const pendingOrders = orders.filter(
+    (order) => order.status === "PENDING",
+  ).length;
+  const canceledOrders = orders.filter(
+    (order) => order.status === "CANCELED",
+  ).length;
 
   return (
     <section className="container mx-auto px-4 md:px-20 py-8 max-w-full">
@@ -179,21 +187,35 @@ export const OrderList = () => {
         <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700">
           <div className="flex flex-col md:flex-row gap-4 text-center md:text-left">
             <div className="p-3 bg-blue-50 dark:bg-blue-900/30 rounded-lg">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Total Ventas</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Total Ventas
+              </p>
               <p className="text-xl font-bold text-blue-600 dark:text-blue-400">
                 Bs. {totalSales.toFixed(2)}
               </p>
             </div>
             <div className="p-3 bg-green-50 dark:bg-green-900/30 rounded-lg">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Completadas</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Completadas
+              </p>
               <p className="text-xl font-bold text-green-600 dark:text-green-400">
                 {completedOrders}
               </p>
             </div>
             <div className="p-3 bg-yellow-50 dark:bg-yellow-900/30 rounded-lg">
-              <p className="text-sm text-gray-500 dark:text-gray-400">Pendientes</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Pendientes
+              </p>
               <p className="text-xl font-bold text-yellow-600 dark:text-yellow-400">
                 {pendingOrders}
+              </p>
+            </div>
+            <div className="p-3 bg-red-50 dark:bg-yellow-900/30 rounded-lg">
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Canceladas
+              </p>
+              <p className="text-xl font-bold text-red-600 dark:text-yellow-400">
+                {canceledOrders}
               </p>
             </div>
           </div>
@@ -216,7 +238,7 @@ export const OrderList = () => {
             //   className="bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden"
             // >
             // </li>
-              <OrderCard key={order.id} order={order} />
+            <OrderCard key={order.id} order={order} />
           ))}
         </ul>
       ) : (

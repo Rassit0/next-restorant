@@ -20,9 +20,28 @@ export const SideCart = () => {
       return;
     }
 
-    const { client } = e.target as HTMLFormElement;
+    // const { client } = e.target as HTMLFormElement;
+    const form = e.target as HTMLFormElement;
+    const client = (form.client as HTMLInputElement).value;
+    const scheduledAtRaw = (form.scheduledAt as HTMLInputElement | undefined)
+      ?.value;
 
-    const { error, message } = await createNewOrder(cart, total, client.value);
+    // Validación: obligatorio
+    if (!scheduledAtRaw) {
+      toast.warning("Debes seleccionar la fecha y hora de entrega");
+      setIsLoading(false);
+      return;
+    }
+
+    // Convertir a Date
+    const scheduledAt = new Date(scheduledAtRaw);
+
+    const { error, message } = await createNewOrder(
+      cart,
+      total,
+      client,
+      scheduledAt,
+    );
 
     if (error) {
       toast.error(message);
@@ -57,6 +76,24 @@ export const SideCart = () => {
         placeholder="Nombre del cliente"
         name="client"
         className="my-4"
+      />
+      <Input
+        isRequired
+        size="sm"
+        type="datetime-local"
+        placeholder="Fecha y hora de entrega"
+        name="scheduledAt"
+        className="my-2"
+        defaultValue={(() => {
+          const d = new Date();
+          d.setHours(12, 0, 0, 0);
+          const year = d.getFullYear();
+          const month = String(d.getMonth() + 1).padStart(2, "0");
+          const day = String(d.getDate()).padStart(2, "0");
+          const hours = String(d.getHours()).padStart(2, "0");
+          const minutes = String(d.getMinutes()).padStart(2, "0");
+          return `${year}-${month}-${day}T${hours}:${minutes}`;
+        })()}
       />
 
       {/* LISTADO DE CARRITO */}

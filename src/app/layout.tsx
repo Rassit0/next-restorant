@@ -3,23 +3,43 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Providers } from "@/modules/shared";
 
-const poppins = Poppins({subsets: ['latin'], weight:['400', '500', '600', '700', '800', '900']});
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+});
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
-  themeColor: '#ffffff',
+  themeColor: "#ffffff",
   maximumScale: 1,
-  userScalable: false
+  userScalable: false,
 };
 
 export const metadata: Metadata = {
   title: "Restaurante - Gestión de Pedidos",
-  description: "Sistema de gestión de pedidos para restaurante con Next.js y Prisma",
+  description:
+    "Sistema de gestión de pedidos para restaurante con Next.js y Prisma",
   keywords: ["restaurante", "pedidos", "gestión", "next.js", "prisma"],
   authors: [{ name: "Mauricio Aramayo" }],
   icons: {
     icon: "/favicon.ico",
+  },
+  openGraph: {
+    title: "Restaurante - Gestión de Pedidos",
+    description:
+      "Sistema de gestión de pedidos para restaurante con Next.js y Prisma",
+    url: "https://next-restorant-ilti.vercel.app", // cambia esto si tienes dominio
+    siteName: "Restaurante - Gestión de Pedidos",
+    images: [
+      {
+        url: "/auth-image.png", // ruta dentro de /public
+        width: 1200,
+        height: 630,
+        alt: "Restaurante - Gestión de Pedidos",
+      },
+    ],
+    type: "website",
   },
 };
 
@@ -30,12 +50,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={poppins.className}
-      >
-        <Providers>
-          {children}
-        </Providers>
+      <body className={poppins.className}>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

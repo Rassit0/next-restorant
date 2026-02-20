@@ -8,4 +8,5 @@ export { OrderList } from "./components/OrderList";
 // ACTIONS
 export { createNewOrder } from "./actions/create-new-order";
 export { completeOrder } from './actions/complete-order';
+export * from './actions/canceled-order';
 

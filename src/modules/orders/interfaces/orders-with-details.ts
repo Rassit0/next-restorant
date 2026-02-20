@@ -1,17 +1,18 @@
 export interface IOrderWithDetails {
-    id:        string;
-    total:     number;
-    status:    boolean;
-    user:      string;
-    client:    string;
-    createdAt: Date;
-    updatedAt: Date;
-    details:   IOrderDetail[];
+  id: string;
+  total: number;
+  status: "PENDING" | "COMPLETED" | "CANCELED";
+  user: string;
+  client: string;
+  scheduledAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  details: IOrderDetail[];
 }
 
 export interface IOrderDetail {
-    productName:  string;
-    productPrice: number;
-    quantity:     number;
-    subTotal:     number;
+  productName: string;
+  productPrice: number;
+  quantity: number;
+  subTotal: number;
 }

@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
       where: {
         ...(startDate || endDate
            ? {
-        createdAt: {
+        scheduledAt: {
           ...(startDate ? { 
             gte: new Date(`${startDate}T00:00:00.000Z`) 
           } : {}),
