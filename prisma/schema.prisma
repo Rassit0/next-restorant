@@ -58,7 +58,7 @@ model Orders {
   user   String
   client String
 
-  scheduledAt DateTime? // Fecha programada para la entrega
+  scheduledAt DateTime // Fecha programada para la entrega
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
